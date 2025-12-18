@@ -8,10 +8,10 @@
     <title>a letter from alen.</title>
     <meta name="description" content="This year has been awesome and thank you for being a part of it">
     
-    <!-- Favicon (White version of the hand-drawn symbol) -->
+    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='21' height='34' viewBox='0 0 21 34' fill='none'%3E%3Cpath d='M14.7894 32.6156C9.74357 23.6052 -0.0598275 4.79142 1.09348 1.61945C2.24679 -1.55252 7.82136 8.22693 10.4645 13.5131C12.5069 8.70748 17.0242 0.68202 18.7542 7.02548C20.4843 13.3689 17.0723 23.3647 15.15 27.5696' stroke='white' stroke-width='2'/%3E%3C/svg%3E">
 
-    <!-- Open Graph / Facebook / WhatsApp -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="a letter from alen.">
     <meta property="og:description" content="This year has been awesome and thank you for being a part of it">
@@ -26,18 +26,19 @@
     <meta property="twitter:description" content="This year has been awesome and thank you for being a part of it">
     <meta name="twitter:image" content="https://nillusions.github.io/Christmas-Wish-from-Alen/preview.jpeg">
 
-    <!-- Google Fonts: Nothing You Could Do, Grape Nuts, Noto Music -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Grape+Nuts&family=Nothing+You+Could+Do&family=Noto+Music&display=swap" rel="stylesheet">
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- html2canvas for downloading the letter as an image -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
     <style>
         :root {
             --paper-bg: #ffecce;
             --page-bg: #f4f1ea;
-            --text-black: #000000;
+            --text-black: #000;
             --footer-grey: #9c9c9c;
         }
 
@@ -53,13 +54,14 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Subtle paper texture */
+        /* Prevent clipping for strokes that go slightly outside viewBox */
+        svg {
+            overflow: visible !important;
+        }
+
         .paper-grain {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png');
             opacity: 0.2;
             pointer-events: none;
@@ -77,79 +79,92 @@
         }
 
         .letter-padding {
-            padding: 108px 65px; /* From Figma Desktop */
+            padding: 108px 65px;
         }
 
         @media (max-width: 768px) {
             .letter-padding {
-                padding: 80px 48px; /* From Figma Mobile */
+                padding: 80px 48px;
             }
         }
 
-        .font-nothing {
-            font-family: 'Nothing You Could Do', cursive;
-        }
+        .font-nothing { font-family: 'Nothing You Could Do', cursive; }
+        .font-grape { font-family: 'Grape Nuts', cursive; }
+        .font-noto { font-family: 'Noto Music', sans-serif; }
 
-        .font-grape {
-            font-family: 'Grape Nuts', cursive;
-        }
-
-        .font-noto {
-            font-family: 'Noto Music', sans-serif;
-        }
-
-        /* Base text sizes matched across paragraphs and signature */
         .content-block, .signature-block {
             display: flex;
             flex-direction: column;
-            font-size: 25.265px; /* Exactly from Figma code */
-            line-height: normal;
+            font-size: 25.265px;
+            line-height: 1.4;
             color: var(--text-black);
         }
 
-        .content-block {
-            gap: 27px;
-        }
+        .content-block { gap: 27px; }
 
         @media (max-width: 768px) {
             .content-block, .signature-block {
                 font-size: 18.68px;
             }
-            .content-block {
-                gap: 20px;
-            }
+            .content-block { gap: 20px; }
         }
 
+        /* Fixed Hi size for both web and image */
         .hi-text {
-            font-size: 25.265px;
+            font-size: 32px !important; 
             margin-bottom: 33px;
+            line-height: 1;
+            display: block;
         }
 
         @media (max-width: 768px) {
             .hi-text {
-                font-size: 18.68px;
+                font-size: 26px !important;
                 margin-bottom: 25px;
             }
         }
 
         .signature-block {
             margin-top: 31px;
-            gap: 3px;
         }
 
-        .heart-icon {
-            width: 21px;
-            height: 34px;
-            margin-left: 8px;
+        /* === SIGNATURE PLACEMENT FIX === */
+        .signature-line {
+            display: inline-block;
+            position: relative;
+            white-space: nowrap;
+            margin-top: 2px;
+        }
+
+        .signature-name {
             display: inline-block;
             vertical-align: middle;
-            overflow: visible;
+            line-height: 1;
+        }
+
+        .heart-wrap {
+            display: inline-block;
+            vertical-align: middle;
+            width: 21px;
+            height: 34px;
+            margin-left: 0px; /* Brought closer to Alen. */
+            position: relative;
+            top: 6px; /* Nudged down to sit better with the text */
+        }
+
+        .heart-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
         }
 
         @media (max-width: 768px) {
-            .heart-icon {
+            .heart-wrap {
                 width: 16px;
                 height: 25px;
+                top: 4px;
             }
         }
 
@@ -174,31 +189,22 @@
         }
 
         @media (max-width: 768px) {
-            .keep-btn {
-                font-size: 18.68px;
-            }
-            .cta-container {
-                gap: 65px;
-            }
+            .keep-btn { font-size: 18.68px; }
+            .cta-container { gap: 65px; }
         }
 
         .footer-text {
             color: var(--footer-grey);
             font-size: 12.3px;
             text-align: center;
-            text-transform: uppercase;
             letter-spacing: 0.05em;
         }
 
         @media (max-width: 768px) {
-            .footer-text {
-                font-size: 9px;
-            }
+            .footer-text { font-size: 9px; }
         }
         
-        #wish-line {
-            font-weight: 700;
-        }
+        #wish-line { font-weight: 700; }
     </style>
 </head>
 <body>
@@ -217,11 +223,24 @@
 
             <div class="signature-block font-nothing">
                 <div>love</div>
-                <div class="flex items-center">
-                    <span>Alen.</span>
-                    <svg class="heart-icon" viewBox="0 0 21 34" xmlns="http://www.w3.org/2000/svg" fill="none">
-                        <path d="M14.7894 32.6156C9.74357 23.6052 -0.0598275 4.79142 1.09348 1.61945C2.24679 -1.55252 7.82136 8.22693 10.4645 13.5131C12.5069 8.70748 17.0242 0.68202 18.7542 7.02548C20.4843 13.3689 17.0723 23.3647 15.15 27.5696" stroke="black" stroke-width="2"/>
-                    </svg>
+                <div class="signature-line">
+                    <span class="signature-name">Alen.</span>
+                    <span class="heart-wrap">
+                        <svg
+                          class="heart-svg"
+                          viewBox="-2 -2 25 38"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M14.7894 32.6156C9.74357 23.6052 -0.0598275 4.79142 1.09348 1.61945C2.24679 -1.55252 7.82136 8.22693 10.4645 13.5131C12.5069 8.70748 17.0242 0.68202 18.7542 7.02548C20.4843 13.3689 17.0723 23.3647 15.15 27.5696"
+                            stroke="black"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          />
+                        </svg>
+                    </span>
                 </div>
             </div>
         </div>
@@ -229,10 +248,7 @@
 
     <div class="cta-container">
         <button class="keep-btn font-nothing" onclick="downloadLetter()">keep this letter</button>
-        
-        <div class="footer-text font-noto">
-            From Alen/ 2025
-        </div>
+        <div class="footer-text font-noto">From Alen/ 2025</div>
     </div>
 
     <script>
@@ -368,26 +384,24 @@
             "Sending you sincere wishes for Christmas and the year ahead."
         ];
 
+        const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+
         function init() {
-            const getRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
-            
-            document.getElementById('p1').innerText = getRandom(intros);
-            document.getElementById('p2').innerText = getRandom(middles);
-            document.getElementById('p3').innerText = getRandom(closings);
-            document.getElementById('wish-line').innerText = getRandom(holidayWishes);
+            document.getElementById('p1').textContent = pick(intros);
+            document.getElementById('p2').textContent = pick(middles);
+            document.getElementById('p3').textContent = pick(closings);
+            document.getElementById('wish-line').textContent = pick(holidayWishes);
         }
 
         async function downloadLetter() {
             const letter = document.getElementById('letter-capture-area');
             const originalShadow = letter.style.boxShadow;
-            
-            // Clean up for capture
             letter.style.boxShadow = 'none';
 
             try {
                 const canvas = await html2canvas(letter, {
                     backgroundColor: '#ffecce',
-                    scale: 3, // High quality
+                    scale: 3, 
                     useCORS: true,
                     logging: false
                 });
@@ -403,7 +417,6 @@
             }
         }
 
-        // Initialize immediately
         init();
     </script>
 </body>
