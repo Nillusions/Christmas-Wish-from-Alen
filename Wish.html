@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Meta Tags -->
+    <title>a letter from alen.</title>
+    <meta name="description" content="This year has been awesome and thank you for being a part of it">
+    
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="a letter from alen.">
+    <meta property="og:description" content="This year has been awesome and thank you for being a part of it">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="a letter from alen.">
+    <meta property="twitter:description" content="This year has been awesome and thank you for being a part of it">
+
+    <!-- Google Fonts: Nothing You Could Do, Grape Nuts, Noto Music -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Grape+Nuts&family=Nothing+You+Could+Do&family=Noto+Music&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- html2canvas for downloading the letter as an image -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        :root {
+            --paper-bg: #ffecce;
+            --page-bg: #f4f1ea;
+            --text-black: #000000;
+            --footer-grey: #9c9c9c;
+        }
+
+        body {
+            background-color: var(--page-bg);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Subtle paper texture */
+        .paper-grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png');
+            opacity: 0.2;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        #letter-capture-area {
+            background-color: var(--paper-bg);
+            max-width: 640px;
+            width: 100%;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            z-index: 1;
+        }
+
+        .letter-padding {
+            padding: 108px 65px; /* From Figma Desktop */
+        }
+
+        @media (max-width: 768px) {
+            .letter-padding {
+                padding: 80px 48px; /* From Figma Mobile */
+            }
+        }
+
+        .font-nothing {
+            font-family: 'Nothing You Could Do', cursive;
+        }
+
+        .font-grape {
+            font-family: 'Grape Nuts', cursive;
+        }
+
+        .font-noto {
+            font-family: 'Noto Music', sans-serif;
+        }
+
+        /* Base text sizes matched across paragraphs and signature */
+        .content-block, .signature-block {
+            display: flex;
+            flex-direction: column;
+            font-size: 25.265px; /* Exactly from Figma code */
+            line-height: normal;
+            color: var(--text-black);
+        }
+
+        .content-block {
+            gap: 27px;
+        }
+
+        @media (max-width: 768px) {
+            .content-block, .signature-block {
+                font-size: 18.68px;
+            }
+            .content-block {
+                gap: 20px;
+            }
+        }
+
+        .hi-text {
+            font-size: 25.265px;
+            margin-bottom: 33px;
+        }
+
+        @media (max-width: 768px) {
+            .hi-text {
+                font-size: 18.68px;
+                margin-bottom: 25px;
+            }
+        }
+
+        .signature-block {
+            margin-top: 31px;
+            gap: 3px;
+        }
+
+        .heart-icon {
+            width: 21px;
+            height: 34px;
+            margin-left: 8px;
+            display: inline-block;
+            vertical-align: middle;
+            overflow: visible;
+        }
+
+        @media (max-width: 768px) {
+            .heart-icon {
+                width: 16px;
+                height: 25px;
+            }
+        }
+
+        .cta-container {
+            margin-top: 61px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 88px;
+            width: 100%;
+        }
+
+        .keep-btn {
+            background: none;
+            border: none;
+            text-decoration: underline;
+            text-underline-position: from-font;
+            font-size: 25.265px;
+            color: var(--text-black);
+            cursor: pointer;
+            padding: 0;
+        }
+
+        @media (max-width: 768px) {
+            .keep-btn {
+                font-size: 18.68px;
+            }
+            .cta-container {
+                gap: 65px;
+            }
+        }
+
+        .footer-text {
+            color: var(--footer-grey);
+            font-size: 12.3px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        @media (max-width: 768px) {
+            .footer-text {
+                font-size: 9px;
+            }
+        }
+        
+        #wish-line {
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="paper-grain"></div>
+
+    <div id="letter-capture-area">
+        <div class="letter-padding">
+            <div class="hi-text font-grape">Hi,</div>
+            
+            <div class="content-block font-nothing">
+                <p id="p1"></p>
+                <p id="p2"></p>
+                <p id="p3"></p>
+                <p id="wish-line" class="max-w-[466px] font-bold"></p>
+            </div>
+
+            <div class="signature-block font-nothing">
+                <div>love</div>
+                <div class="flex items-center">
+                    <span>Alen.</span>
+                    <svg class="heart-icon" viewBox="0 0 21 34" xmlns="http://www.w3.org/2000/svg" fill="none">
+                        <path d="M14.7894 32.6156C9.74357 23.6052 -0.0598275 4.79142 1.09348 1.61945C2.24679 -1.55252 7.82136 8.22693 10.4645 13.5131C12.5069 8.70748 17.0242 0.68202 18.7542 7.02548C20.4843 13.3689 17.0723 23.3647 15.15 27.5696" stroke="black" stroke-width="2"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cta-container">
+        <button class="keep-btn font-nothing" onclick="downloadLetter()">keep this letter</button>
+        
+        <div class="footer-text font-noto">
+            From Alen/ 2025
+        </div>
+    </div>
+
+    <script>
+        const intros = [
+            "I wanted to take a moment to say thank you. Not for any one thing in particular, just for being part of my year.",
+            "This is a small pause in a busy season. I wanted to use it to say thank you for being here.",
+            "Before the year turns, I wanted to leave this note with you. It’s simply a thank you, meant honestly.",
+            "I’ve been meaning to say this for a while. I’m grateful our paths crossed this year.",
+            "This isn’t a big message, just a sincere one. Thank you for being part of my year in your own way.",
+            "As things slow down for a moment, this felt like the right time to say thank you.",
+            "A lot happens over the course of a year. Some people make it better just by being part of it.",
+            "I wanted to take a quiet moment to acknowledge the people around me. Thank you for being one of them.",
+            "This note exists for one simple reason. To say thank you, without overthinking it.",
+            "Before the rush of the next year begins, I wanted to pause and say this.",
+            "This is just a short note to say I appreciate you. It felt important not to let the year end without saying that.",
+            "Not everything needs a long explanation. This starts with a genuine thank you.",
+            "I don’t always pause to say this out loud. I’m glad our paths crossed this year.",
+            "This year moved quickly in many ways. I wanted to slow down for a moment and say thank you.",
+            "I wanted to take a moment to acknowledge the people who shaped my year.",
+            "This message is simple by design. It’s a small thank you, meant sincerely.",
+            "Before anything else, I wanted to say this. I appreciate you.",
+            "There’s a lot we rush past during the year. Gratitude shouldn’t be one of them.",
+            "I wanted to leave a small note here, just to say thank you.",
+            "This year brought a mix of work, life, and everything in between.",
+            "Not a big announcement — just a quiet thank you.",
+            "This felt like a good moment to pause and acknowledge what mattered.",
+            "I wanted to end the year by saying something simple and honest.",
+            "This note isn’t about milestones or outcomes. It’s about people.",
+            "I don’t know how this year looked from your side. From mine, I’m grateful you were part of it.",
+            "This is just a small message to say thank you. Some things shouldn’t be left unsaid.",
+            "Before the calendar turns, I wanted to leave this here.",
+            "This year held a lot of moving pieces. I’m glad our paths overlapped.",
+            "I wanted to recognize the people who made the year feel fuller.",
+            "This note is simple and intentional. I’m grateful you were part of my year."
+        ];
+
+        const middles = [
+            "This year came with its share of movement and pause. Somewhere in between, you were part of it, and that mattered more than you might realise.",
+            "Looking back, I notice the people who made things feel steadier. Your presence was one of those quiet constants.",
+            "Some moments stayed small, others carried weight. Either way, I’m glad you were part of the year as it unfolded.",
+            "Work, life, and everything in between blended together this year. Having you somewhere in that mix made it better.",
+            "Not every connection needs daily conversation to matter. Some simply do.",
+            "There were days that moved too fast and others that asked for patience.",
+            "This year wasn’t about perfection, but about showing up.",
+            "Even brief interactions can leave a lasting impression.",
+            "Some things went as planned, others didn’t. What stayed consistent was the value of good people along the way.",
+            "It’s often the steady, unspoken support that counts most.",
+            "This year asked a lot from many of us.",
+            "Not everything needs to be loud to be meaningful.",
+            "The year moved forward in its own imperfect way.",
+            "Some connections deepen through time, others through timing.",
+            "There were moments of learning, adjusting, and letting go.",
+            "This year felt fuller because of the people in it.",
+            "I noticed the effort, even when it wasn’t visible to everyone else.",
+            "Life and work overlapped in unexpected ways this year.",
+            "Some years teach you what to hold on to.",
+            "There were moments that stayed with me longer than expected.",
+            "Not every contribution shows up clearly on the surface.",
+            "This year reminded me how much people shape the experience.",
+            "Some days felt lighter because of the people involved.",
+            "It wasn’t always smooth, but it was real.",
+            "Looking back, it’s clear who made the year feel more grounded.",
+            "This year moved in unexpected directions.",
+            "Even small moments of connection can carry meaning.",
+            "I found myself appreciating consistency more than noise this year.",
+            "Some things are easier when shared, even briefly.",
+            "The year was shaped by many interactions, big and small."
+        ];
+
+        const closings = [
+            "I’m grateful for what you brought into my year, knowingly or not. I wanted you to know that.",
+            "Thank you for being part of my year in a way that felt genuine.",
+            "I appreciate the time, presence, and energy you shared this year.",
+            "As the year comes to a close, I wanted to say how thankful I am.",
+            "I’m glad our paths crossed, and I carry that gratitude forward.",
+            "Thank you for being exactly who you are in the spaces we shared.",
+            "I wanted to pause before the year ends and acknowledge that you mattered.",
+            "I’m thankful for the role you played in my year.",
+            "This felt like the right moment to say I appreciate you.",
+            "I don’t always say this out loud, but I’m grateful for you.",
+            "Thank you for the moments, conversations, and presence this year.",
+            "I’m ending this year with appreciation.",
+            "I wanted to make sure this year didn’t end without a thank you.",
+            "I’m grateful our paths aligned when they did.",
+            "Thank you for contributing to a year that felt meaningful.",
+            "I appreciate the steadiness you brought into my year.",
+            "This note exists to acknowledge what mattered.",
+            "I’m thankful for the way you showed up.",
+            "I wanted to carry this gratitude forward before the year turns.",
+            "Thank you for being part of my year.",
+            "I’m glad I had the chance to share parts of this year with you.",
+            "I wanted to end the year by acknowledging the people who mattered.",
+            "Thank you for making the year feel more complete.",
+            "I’m grateful for what we shared this year.",
+            "This felt like the right way to close the year.",
+            "I appreciate you more than I probably expressed.",
+            "Thank you for being part of my journey this year.",
+            "I’m ending this year thankful for people like you.",
+            "I wanted to leave this year with appreciation.",
+            "Thank you for being part of a year I’ll remember."
+        ];
+
+        const holidayWishes = [
+            "Merry Christmas, and may the year ahead meet you gently.",
+            "Wishing you a warm Christmas and a New Year that feels kind.",
+            "Merry Christmas, and here’s to a steadier year ahead.",
+            "Sending you good wishes for Christmas and the coming year.",
+            "I hope this Christmas gives you rest, and the New Year brings clarity.",
+            "Wishing you a calm Christmas and a thoughtful New Year.",
+            "Merry Christmas, and may the year ahead feel lighter.",
+            "I hope the holidays slow things down, and the New Year moves you forward.",
+            "Wishing you warmth this Christmas and balance in the year ahead.",
+            "Merry Christmas, and may the next year feel more aligned.",
+            "I hope this season brings you ease and the New Year brings direction.",
+            "Wishing you a peaceful Christmas and a steady New Year.",
+            "Merry Christmas, and here’s to what comes next.",
+            "I hope the holidays give you space, and the year ahead gives you momentum.",
+            "Wishing you rest now and renewed energy soon.",
+            "Merry Christmas, and may the year ahead treat you well.",
+            "I hope Christmas feels unhurried and the New Year feels right.",
+            "Wishing you comfort this season and clarity going forward.",
+            "Merry Christmas, and may the coming year surprise you kindly.",
+            "Sending warm wishes for Christmas and quiet confidence for the year ahead.",
+            "I hope the season brings you calm and the New Year brings focus.",
+            "Wishing you a gentle Christmas and a meaningful New Year.",
+            "Merry Christmas, and may the year ahead unfold well.",
+            "I hope the holidays bring rest and the year ahead brings balance.",
+            "Wishing you peace now and purpose ahead.",
+            "Merry Christmas, and here’s to moving forward at your own pace.",
+            "I hope Christmas feels warm and the New Year feels possible.",
+            "Wishing you good moments this season and steady days ahead.",
+            "Merry Christmas, and may the coming year feel true to you.",
+            "Sending you sincere wishes for Christmas and the year ahead."
+        ];
+
+        function init() {
+            const getRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
+            
+            document.getElementById('p1').innerText = getRandom(intros);
+            document.getElementById('p2').innerText = getRandom(middles);
+            document.getElementById('p3').innerText = getRandom(closings);
+            document.getElementById('wish-line').innerText = getRandom(holidayWishes);
+        }
+
+        async function downloadLetter() {
+            const letter = document.getElementById('letter-capture-area');
+            const originalShadow = letter.style.boxShadow;
+            
+            // Clean up for capture
+            letter.style.boxShadow = 'none';
+
+            try {
+                const canvas = await html2canvas(letter, {
+                    backgroundColor: '#ffecce',
+                    scale: 3, // High quality
+                    useCORS: true,
+                    logging: false
+                });
+                
+                const link = document.createElement('a');
+                link.download = `letter-from-alen.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            } catch (err) {
+                console.error("Download failed:", err);
+            } finally {
+                letter.style.boxShadow = originalShadow;
+            }
+        }
+
+        // Initialize immediately
+        init();
+    </script>
+</body>
+</html>
